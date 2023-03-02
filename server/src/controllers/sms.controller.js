@@ -1,5 +1,6 @@
 const axios = require("axios");
 const responseHandler = require("../handlers/response.handler");
+const studentModel = require('../models/student');
 
 const generateToken = async (req, res) => {
    const SMSSHLYUZAPIURL = process.env.SMS_SHLYUZ_API_URL;
@@ -24,12 +25,22 @@ const sendMessage = async (req, res) => {
    try {
       const token = req.query.token;
 
-      const mobilePhones = req.body.mobilePhones;
+      const students = req.body.students;
       const message = req.body.message;
       const data = [];
+      const phones = [];
 
-      for (let i = 0; i < mobilePhones.length; i++) {
-         const phone = mobilePhones[i].phone;
+      for (let i = 0; i < students.length; i++) {
+         const item = students[i];
+         const student = await studentModel.findById(item);
+
+         phones.push({
+            phone: student.phoneNumber
+         })
+      }
+
+      for (let i = 0; i < phones.length; i++) {
+         const phone = phones[i].phone;
 
          const response = await axios.post(
             `${SMSSHLYUZAPIURL}message/sms/send`,
@@ -48,7 +59,7 @@ const sendMessage = async (req, res) => {
          data.push(response.data);
       }
 
-      if (data.length === mobilePhones.length) {
+      if (data.length === phones.length) {
          responseHandler.ok(res, data);
       }
    } catch (err) {
