@@ -1,6 +1,9 @@
 const axios = require("axios");
+const { isValidObjectId } = require("mongoose");
 const responseHandler = require("../handlers/response.handler");
 const studentModel = require('../models/student');
+const smsTemplateModel = require('../models/smsTemplate');
+const smsStatusModel = require('../models/smsStatus');
 
 const generateToken = async (req, res) => {
    const SMSSHLYUZAPIURL = process.env.SMS_SHLYUZ_API_URL;
@@ -24,9 +27,13 @@ const sendMessage = async (req, res) => {
    const SMSSHLYUZAPIURL = process.env.SMS_SHLYUZ_API_URL;
    try {
       const token = req.query.token;
+      const { students, message } = req.body;
+      let messageBody = message;
+      if (isValidObjectId(message)) {
+         const smsTemplate = await smsTemplateModel.findById(message);
+         messageBody = smsTemplate.message;
+      }
 
-      const students = req.body.students;
-      const message = req.body.message;
       const data = [];
       const phones = [];
 
@@ -46,7 +53,7 @@ const sendMessage = async (req, res) => {
             `${SMSSHLYUZAPIURL}message/sms/send`,
             {
                mobile_phone: phone,
-               message,
+               message: messageBody,
             },
             {
                headers: {
@@ -56,7 +63,17 @@ const sendMessage = async (req, res) => {
             }
          );
 
-         data.push(response.data);
+         await smsStatusModel.create({
+            id: response.data.id,
+            phone: phone,
+            message: messageBody
+         })
+
+         data.push({
+            id: response.data.id,
+            phone: phone,
+            message: messageBody
+         });
       }
 
       if (data.length === phones.length) {

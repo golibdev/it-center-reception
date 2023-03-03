@@ -7,18 +7,33 @@ const moment = require('moment');
 
 const getAll = async (req, res) => {
    try {
+      const page = parseInt(req.query.page) || 1
+      const limit = 10
+      const skipIndex = (page - 1) * limit
+
+
       const students = await studentModel
          .find({})
+         .skip(skipIndex)
+         .limit(limit)
          .populate('course')
          .populate('courseTime')
          .sort({ createdAt: -1 });
+      
+      const total = await studentModel.countDocuments();
 
       responseHandler.ok(res, {
          message: "students",
-         students
+         students,
+         pagination: {
+            total,
+            limit,
+            page,
+            next: `/api/v1/student?page=${page + 1}`
+         }
       });
    } catch (err) {
-      responseHandler(res, err);
+      responseHandler.error(res, err);
    }
 }
 

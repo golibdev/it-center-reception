@@ -6,5 +6,7 @@ router.use('/course', require('./course.route'));
 router.use('/course-time', require('./courseTime.route'));
 router.use('/student', require('./student.route'));
 router.use('/sms', require('./sms.route'));
+router.use('/sms-template', require('./smsTemplate.route'));
+router.use('/sms-status', require('./smsStatus.route'));
 
 module.exports = router;
