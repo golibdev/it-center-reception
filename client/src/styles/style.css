@@ -1,0 +1,16 @@
+.spinner-wrapper {
+   height: calc(100vh - 60px);
+}
+
+.min-100 {
+   height: calc(100vh - 60px) !important;
+}
+
+#card {
+   transition: transform .3s ease-in;
+   cursor: pointer;
+}
+
+#card:hover {
+   transform: scale(1.03);
+}
