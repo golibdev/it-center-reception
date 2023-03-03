@@ -13,7 +13,7 @@ const AppLayout = () => {
    const navigate = useNavigate();
    const [loading, setLoading] = useState(false)
    const dispatch = useDispatch();
-   const token = JSON.parse(localStorage.getItem('token'));
+   const token = localStorage.getItem('token');
    
    useEffect(() => {
       const getUserInfo = async () => {
@@ -26,6 +26,7 @@ const AppLayout = () => {
          }
 
          if(err) {
+            console.log(err);
             localStorage.removeItem('token');
             navigate('/')
          }
@@ -43,7 +44,7 @@ const AppLayout = () => {
       document.body.classList.toggle('toggle-sidebar')
    }
 
-   if(auth.isAuth) {
+   if(auth.isAuth()) {
       return (
          <>
             <Header openSidebar={openSidebar} />

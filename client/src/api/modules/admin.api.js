@@ -23,6 +23,7 @@ const adminApi = {
    info: async () => {
       try {
          const response = await privateClient.get(adminEndpoints.info);
+         return { response }
       } catch (err) {
          return { err }
       }

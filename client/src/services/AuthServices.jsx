@@ -1,12 +1,8 @@
 import adminApi from '../api/modules/admin.api';
 const keyUser = 'token';
 
-function setSession(response) {
-   const merged = {
-     token: response.token
-   };
- 
-   localStorage.setItem(keyUser, JSON.stringify(merged));
+function setSession(response) { 
+   localStorage.setItem(keyUser, response.token);
 }
 
 function getSession() {

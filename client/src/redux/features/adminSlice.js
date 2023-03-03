@@ -10,7 +10,7 @@ export const adminSlice = createSlice({
          if (action.payload === null) {
             localStorage.removeItem('token')
          } else {
-            localStorage.setItem("token", JSON.stringify(action.payload))
+            localStorage.setItem("token", action.payload.token)
          }
 
          state.admin = action.payload;
