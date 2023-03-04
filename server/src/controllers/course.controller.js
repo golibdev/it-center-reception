@@ -39,6 +39,7 @@ const creatCourse = async (req, res) => {
       const course = await courseModel.create({ title });
 
       responseHandler.created(res, {
+         message: "Created Successfuly",
          ...course._doc
       })
    } catch (err) {
@@ -71,16 +72,16 @@ const updateCourse = async (req, res) => {
 const updateStatusCourse = async (req, res) => {
    try {
       const id = req.params.id;
+      const status = req.body.status;
 
       if (!isValidObjectId(id)) return responseHandler.badrequest("not object id")
 
       const course = await courseModel.findById(id);
 
-      if (!course) return responseHandler.notfound(res)
-
+      if (!course) return responseHandler.notfound(res);
 
       await courseModel.findByIdAndUpdate(id, {
-         status: true
+         status: status
       }, { new: true })
 
       responseHandler.ok(res, {

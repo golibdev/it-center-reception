@@ -5,29 +5,29 @@ const main = [
       icon: "bi bi-house"
    },
    {
-      displayText: "Students",
+      displayText: "O'quvchilar",
       path: "/admin/student",
       icon: "bi bi-people-fill"
    },
    {
-      displayText: "Sms Status",
-      path: "/admin/sms-status",
-      icon: "bi bi-envelope-exclamation-fill"
-   },
-   {
-      displayText: "Sms Templates",
-      path: "/admin/sms-template",
-      icon: "bi bi-envelope-open-fill"
-   },
-   {
-      displayText: "Courses",
+      displayText: "Kurslar",
       path: "/admin/course",
       icon: "bi bi-laptop-fill"
    },
    {
-      displayText: "Course Times",
+      displayText: "Kurs vaqtlari",
       path: "/admin/course-time",
-      icon: "bi bi-calendar-date-fill"
+      icon: "bi bi-clock-fill"
+   },
+   {
+      displayText: "Xabar shablonlari",
+      path: "/admin/sms-template",
+      icon: "bi bi-envelope-open-fill"
+   },
+   {
+      displayText: "Jo'natilgan xabarlar",
+      path: "/admin/sms-status",
+      icon: "bi bi-envelope-exclamation-fill"
    }
 ]
 

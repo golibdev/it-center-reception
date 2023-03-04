@@ -6,7 +6,6 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import useAuth from '../hooks/useAuth';
 import Loader from '../components/common/Loader';
-import adminApi from '../api/modules/admin.api';
 import { setAdmin } from '../redux/features/adminSlice'
 
 const Login = () => {
@@ -23,11 +22,11 @@ const Login = () => {
     },
     validationSchema: Yup.object({
       username: Yup.string()
-        .min(1, "username minimum 1 character")
-        .required("Username is required"),
+        .min(1, "Eng kamida 1ta belgi kiritilishi kerak")
+        .required("Foydalanuvchi nomi kiritilishi shart"),
       password: Yup.string()
-        .min(8, "Password minimum 8 character")
-        .required("Password is required")
+        .min(8, "Parol kamida 8ta begildan iborat bo'lishi kerak")
+        .required("Parol kiritilishi shart")
     }),
     onSubmit: async values => {
       setIsLoginRequest(true)
@@ -35,9 +34,9 @@ const Login = () => {
       setIsLoginRequest(false);
 
       if(response) {
-        toast.success("Successfuly signin")
+        toast.success("Muvaffaqqiyatli tizimga kirildi")
         dispatch(setAdmin(response));
-        navigate('/')
+        navigate('/admin')
       }
 
       if (err) {
@@ -51,7 +50,7 @@ const Login = () => {
         <form className="card shadow" onSubmit={signInForm.handleSubmit}>
           <div className="card-header bg-white">
             <h1 className='text-center card-text font-gilroy-bold p-0 m-0'>
-              Manager Login
+              Tizimga kirish
             </h1>
           </div>
           <div className="card-body pt-3">
@@ -76,7 +75,8 @@ const Login = () => {
           </div>
           <div className="card-footer">
             <button className='btn btn-primary d-block w-100'>
-              Login
+              {isLoginRequest && <Loader/>}
+              <span>Kirish</span>
             </button>
           </div>
         </form>

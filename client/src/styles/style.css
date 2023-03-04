@@ -14,3 +14,9 @@
 #card:hover {
    transform: scale(1.03);
 }
+
+@media (max-width: 768px) {
+   .table {
+      width: 800px !important;
+   }
+}

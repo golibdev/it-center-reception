@@ -47,7 +47,7 @@ const updateCourseTime = async (req, res) => {
       const id = req.params.id;
       const { title } = req.body;
 
-      const updatedCourseTime = await courseTimeModel.findById(id, { title }, { new: true });
+      const updatedCourseTime = await courseTimeModel.findByIdAndUpdate(id, { title }, { new: true });
 
       responseHandler.ok(res, { courseTime: updatedCourseTime });
    } catch (err) {

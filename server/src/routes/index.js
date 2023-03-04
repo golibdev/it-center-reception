@@ -8,5 +8,6 @@ router.use('/student', require('./student.route'));
 router.use('/sms', require('./sms.route'));
 router.use('/sms-template', require('./smsTemplate.route'));
 router.use('/sms-status', require('./smsStatus.route'));
+router.use('/summary', require('./summary.route'));
 
 module.exports = router;

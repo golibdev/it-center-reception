@@ -20,7 +20,6 @@ const signup = async (req, res) => {
       const token = jsonwebtoken.sign(
          { data: admin.id },
          process.env.TOKEN_SECRET,
-         { expiresIn: "24h" }
       )
 
       responseHandler.created(res, {
@@ -45,8 +44,7 @@ const signin = async (req, res) => {
       
       const token = jsonwebtoken.sign(
          { data: admin.id },
-         process.env.TOKEN_SECRET,
-         { expiresIn: "24h" }
+         process.env.TOKEN_SECRET
       )
 
       admin.password = undefined;

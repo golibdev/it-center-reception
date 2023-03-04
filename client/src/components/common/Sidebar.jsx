@@ -14,7 +14,7 @@ const Sidebar = ({openSidebar}) => {
          <ul className="sidebar-nav" id="sidebar-nav">
             {main.map((menu, index) => (
                <li className="nav-item" key={index}>
-                  <Link onClick={tablet && openSidebar} className={`nav-link ${path !== menu.path && 'collapsed'}`} to={menu.path}>
+                  <Link onClick={tablet && openSidebar} className={`nav-link font-gilroy-bold ${path !== menu.path && 'collapsed'}`} to={menu.path}>
                      <i className={menu.icon}></i>
                      <span>{menu.displayText}</span>
                   </Link>
