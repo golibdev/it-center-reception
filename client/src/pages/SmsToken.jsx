@@ -26,7 +26,7 @@ const SmsToken = () => {
    }
 
    setInterval(() => {
-      day = day - 1
+      day = day - 1;
       localStorage.setItem('day', day);
    }, 1000 * 60 * 60 * 60 * 24)
    return (
