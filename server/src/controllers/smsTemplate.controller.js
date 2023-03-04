@@ -49,8 +49,29 @@ const create = async (req, res) => {
    }
 }
 
+const deleteSmsTemplate = async (req, res) => {
+   try {
+      const id = req.params.id;
+
+      if (!isValidObjectId(id)) return responseHandler.badrequest(res, "not object id");
+
+      const smsTemplate = await smsTemplateModel.findById(id);
+
+      if (!smsTemplate) return responseHandler.notfound(res);
+
+      await smsTemplateModel.findByIdAndRemove(id)
+
+      responseHandler.ok(res, {
+         message: "Deleted successfuly"
+      })
+   } catch (err) {
+      responseHandler.error(res, err);
+   }
+}
+
 module.exports = {
    getAll,
    getOne,
-   create
+   create,
+   deleteSmsTemplate
 }

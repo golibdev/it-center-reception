@@ -223,7 +223,6 @@ const UpdateCourse = ({ getAll, item }) => {
       }
 
       if (err) {
-        console.log(err);
         toast.error(err.message);
       }
     }

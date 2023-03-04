@@ -33,6 +33,12 @@ const Header = ({ openSidebar }) => {
                         <hr className="dropdown-divider"/>
                      </li>
                      <li>
+                        <Link className='dropdown-item d-flex align-items-center m-0' to={'/admin/sms-token'}>
+                           <i className='bi bi-key-fill'></i>
+                           <span className='font-gilroy-medium'>SMS Token</span>
+                        </Link>
+                     </li>
+                     <li>
                         <hr className="dropdown-divider"/>
                      </li>
                      <li>

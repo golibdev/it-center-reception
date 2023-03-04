@@ -15,4 +15,10 @@ router.post(
    smsController.sendMessage
 )
 
+router.post(
+   '/send-sms-all-user',
+   tokenMiddleware.auth,
+   smsController.sendAllUserMessage
+)
+
 module.exports = router;

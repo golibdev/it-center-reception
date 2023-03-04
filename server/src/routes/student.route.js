@@ -22,6 +22,12 @@ router.get(
 )
 
 router.get(
+   '/search',
+   tokenMiddleware.auth,
+   studentController.search
+)
+
+router.get(
    '/course',
    tokenMiddleware.auth,
    studentController.getFilterCourseStudents

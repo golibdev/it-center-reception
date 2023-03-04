@@ -16,7 +16,7 @@ const getAll = async (req, res) => {
       const total = await smsStatusModel.countDocuments();
 
       responseHandler.ok(res, {
-         smsStatus,
+         sms: smsStatus,
          pagination: {
             total,
             limit,

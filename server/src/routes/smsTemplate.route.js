@@ -36,4 +36,10 @@ router.post(
    smsTemplateController.create
 )
 
+router.delete(
+   '/delete/:id',
+   tokenMiddleware.auth,
+   smsTemplateController.deleteSmsTemplate
+)
+
 module.exports = router

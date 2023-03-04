@@ -59,6 +59,31 @@ const getOne = async (req, res) => {
    }
 }
 
+const search = async (req, res) => {
+   try {
+      const { search } = req.query;
+      const regex = new RegExp(search.toLowerCase().trim(), 'i')
+
+      const students = await studentModel.find({
+         $or: [
+            {
+               fullName: { $regex: regex }
+            },
+            {
+               phoneNumber: { $regex: regex }
+            }
+         ]
+      }).populate('course').populate('courseTime').sort({ createdAt: -1 })
+
+      responseHandler.ok(res, {
+         message: "Stundents",
+         students
+      })
+   } catch (err) {
+      responseHandler.error(res, err)
+   }
+}
+
 const getFilterStudents = async (req, res) => {
    try {
       const { status, course } = req.query;
@@ -186,7 +211,7 @@ const thisDateRegisteredStudent = async (req, res) => {
             $gt: new Date(new Date(startDate).setHours(00, 00, 00)),
             $lt: new Date(new Date(endDate).setHours(23, 59, 59))
          }
-      })
+      }).populate('course').populate('courseTime')
 
       responseHandler.ok(res, {
          message: "Students",
@@ -204,5 +229,6 @@ module.exports = {
    createStudent,
    getFilterCourseStudents,
    updateStatusStudent,
-   thisDateRegisteredStudent
+   thisDateRegisteredStudent,
+   search
 }

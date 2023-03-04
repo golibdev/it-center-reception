@@ -27,7 +27,7 @@ async function login(params) {
 
 async function logout(navigate) {
    try {
-      localStorage.clear(keyUser);
+      localStorage.removeItem(keyUser);
       navigate('/')
    } catch (err) {}
 }
