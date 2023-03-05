@@ -170,24 +170,25 @@ const Student = () => {
                      <div className="card-body pt-3 pb-3 d-flex align-items-center justify-content-between">
                         <PageTitle pageName={"O'quvchilar"} />
                         <div>
-                           <button 
-                              className='btn btn-primary font-gilroy-medium me-3'
-                              data-bs-toggle="offcanvas" 
-                              data-bs-target="#addStudent" 
-                              aria-controls="offcanvasRight"
-                           >
-                              Qo'shish
-                           </button>
+                           <div className='d-flex'>
+                              <button 
+                                 className='btn btn-primary font-gilroy-medium me-3'
+                                 data-bs-toggle="offcanvas" 
+                                 data-bs-target="#addStudent" 
+                                 aria-controls="offcanvasRight"
+                              >
+                                 Qo'shish
+                              </button>
+                              <button 
+                                 className='btn btn-success font-gilroy-medium'
+                                 data-bs-toggle="offcanvas"
+                                 data-bs-target="#sendMessageall"
+                                 aria-controls="offcanvasRight"
+                              >
+                                 <i className='bi bi-envelope-check-fill'></i>
+                              </button>
+                           </div>
                            <AddStudent getAll={getAll} courseOptions={courseOptions} courseTimeOptions={courseTimeOptions} />
-
-                           <button 
-                              className='btn btn-success font-gilroy-medium'
-                              data-bs-toggle="offcanvas"
-                              data-bs-target="#sendMessageall"
-                              aria-controls="offcanvasRight"
-                           >
-                              <i className='bi bi-envelope-check-fill'></i>
-                           </button>
                            <SendSms type={'all'} students={clickedStudents} />
                         </div>
                      </div>
