@@ -46,13 +46,15 @@ const SmsStatus = () => {
                   <div className="card">
                      <div className="card-body pt-3 pb-3">
                         <SmsStatusList getAll={getAll} data={data} currentPage={currentPage} />
-                        <Paginate
-                           setData={setData}
-                           currentPage={currentPage}
-                           setCurrentPage={setCurrentPage}
-                           pageCount={pageCount}
-                           type={'sms'}
-                        />
+                        {pageCount > 1 && (
+                           <Paginate
+                              setData={setData}
+                              currentPage={currentPage}
+                              setCurrentPage={setCurrentPage}
+                              pageCount={pageCount}
+                              type={'sms'}
+                           />
+                        )}
                      </div>
                   </div>
                </div>

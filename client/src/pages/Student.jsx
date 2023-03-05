@@ -300,13 +300,15 @@ const Student = () => {
                         <StudentList clickedStudent={clickedStudent} getAll={getAll} data={data} currentPage={currentPage}/>
                         <div className='d-flex align-items-center justify-content-between'>
                            {!isSearch && (
-                              <Paginate
-                                 setData={setData}
-                                 currentPage={currentPage}
-                                 setCurrentPage={setCurrentPage}
-                                 pageCount={pageCount}
-                                 type={'student'}
-                              />
+                              pageCount > 1 && (
+                                 <Paginate
+                                    setData={setData}
+                                    currentPage={currentPage}
+                                    setCurrentPage={setCurrentPage}
+                                    pageCount={pageCount}
+                                    type={'student'}
+                                 />
+                              )
                            )}
                            {clickedStudents.length > 0 && (
                               <>
