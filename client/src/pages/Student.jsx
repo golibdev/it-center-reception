@@ -179,14 +179,16 @@ const Student = () => {
                               >
                                  Qo'shish
                               </button>
-                              <button 
-                                 className='btn btn-success font-gilroy-medium'
-                                 data-bs-toggle="offcanvas"
-                                 data-bs-target="#sendMessageall"
-                                 aria-controls="offcanvasRight"
-                              >
-                                 <i className='bi bi-envelope-check-fill'></i>
-                              </button>
+                              {data.length > 0 && (
+                                 <button 
+                                    className='btn btn-success font-gilroy-medium'
+                                    data-bs-toggle="offcanvas"
+                                    data-bs-target="#sendMessageall"
+                                    aria-controls="offcanvasRight"
+                                 >
+                                    <i className='bi bi-envelope-check-fill'></i>
+                                 </button>
+                              )}
                            </div>
                            <AddStudent getAll={getAll} courseOptions={courseOptions} courseTimeOptions={courseTimeOptions} />
                            <SendSms type={'all'} students={clickedStudents} />
