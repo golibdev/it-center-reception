@@ -29,6 +29,7 @@ const App = () => {
         <Routes>
           <Route path='/' element={<MainLayout/>}>
             <Route index element={<Login/>} />
+            <Route path='*' element={<Notfound/>} />
           </Route>
           <Route path='/admin' element={<AppLayout/>}>
             <Route index element={<Home/>} />
@@ -38,6 +39,7 @@ const App = () => {
             <Route path='/admin/student' element={<Student/>} />
             <Route path='/admin/sms-status' element={<SmsStatus/>} />
             <Route path='/admin/sms-token' element={<SmsToken/>} />
+            <Route path='*' element={<Notfound/>} />
           </Route>
         </Routes>
       </BrowserRouter>
