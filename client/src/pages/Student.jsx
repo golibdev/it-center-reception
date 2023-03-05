@@ -186,7 +186,7 @@ const Student = () => {
                               data-bs-target="#sendMessageall"
                               aria-controls="offcanvasRight"
                            >
-                              Barchaga xabar jo'natish
+                              <i className='bi bi-envelope-check-fill'></i>
                            </button>
                            <SendSms type={'all'} students={clickedStudents} />
                         </div>
