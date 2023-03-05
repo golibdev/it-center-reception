@@ -192,7 +192,7 @@ const AddCourse = ({ getAll }) => {
           </div>
 
           <button className='btn btn-primary'>
-            <i className='ms-2 bi bi-plus-circle'></i>
+            <i className='bi bi-plus-circle'></i>
             {isRequest && <Loader/>}
           </button>
         </form>
