@@ -69,12 +69,14 @@ const sendMessage = async (req, res) => {
             message: messageBody
          })
 
-         responseHandler.ok(res, {
+         data.push({
             id: response.data.id,
             phone: phone,
             message: messageBody
          })
       }
+
+      responseHandler.ok(res, data);
    } catch (err) {
       responseHandler.error(res, err);
    }
@@ -127,12 +129,14 @@ const sendAllUserMessage = async (req, res) => {
             message: messageBody
          })
 
-         responseHandler.ok(res, {
+         data.push({
             id: response.data.id,
             phone: phone,
             message: messageBody
          })
       }
+
+      responseHandler.ok(res, data)
    } catch (err) {
       responseHandler.error(res, err)
    }

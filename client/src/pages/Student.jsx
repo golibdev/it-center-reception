@@ -149,7 +149,7 @@ const Student = () => {
    }
 
    const clickedStudent = (e, id) => {
-      const checked = e.target.checked
+      const checked = e.target.checked;
       if (checked) setClickedStudents([...clickedStudents, id])
       else {
          const filter = clickedStudents.filter(item => item !== id);
@@ -590,7 +590,8 @@ const SendSms = ({ students, type }) => {
          setIsrequest(false)
 
          if (response) {
-            console.log(response);
+            toast.success(`${response.phone} ga xabar jo'natildi`);
+            sendMessage('')
          }
    
          if (err) toast.error(err.message);
@@ -600,8 +601,8 @@ const SendSms = ({ students, type }) => {
          setIsrequest(false)
 
          if (response) {
-            response.map(item => toast.success(`${item.phone} ga xabar jo'natildi`));
-            setMessage('')
+            toast.success(`${response.phone} ga xabar jo'natildi`);
+            sendMessage('')
          }
    
          if (err) toast.error(err.message);

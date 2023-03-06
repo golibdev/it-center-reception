@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 import smsStatusApi from '../../api/modules/smsStatatus.api'
 import studentApi from '../../api/modules/student.api'
 
-const Paginate = ({ setData, pageCount, setCurrentPage, currentPage, type }) => {
+const Paginate = ({ setData, pageCount, setCurrentPage, currentPage, type}) => {
    const handlePageClick = (event) => {
       setCurrentPage(event.selected + 1)
    }
