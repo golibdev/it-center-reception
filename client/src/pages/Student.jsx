@@ -443,6 +443,7 @@ const AddStudent = ({ getAll, courseOptions, courseTimeOptions }) => {
          if (response) {
             toast.success("O'quvchi muvaffaqqiyatli ro'yxatdan o'tkazildi");
             getAll();
+            addStudent.resetForm();
          }
 
          if (err) toast.error(err.message);
