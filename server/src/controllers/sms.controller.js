@@ -69,15 +69,11 @@ const sendMessage = async (req, res) => {
             message: messageBody
          })
 
-         data.push({
+         responseHandler.ok(res, {
             id: response.data.id,
             phone: phone,
             message: messageBody
-         });
-      }
-
-      if (data.length === phones.length) {
-         responseHandler.ok(res, data);
+         })
       }
    } catch (err) {
       responseHandler.error(res, err);
@@ -97,7 +93,6 @@ const sendAllUserMessage = async (req, res) => {
          messageBody = smsTemplate.message;
       }
 
-      const data = [];
       const phones = [];
 
       for (let i = 0; i < students.length; i++) {
@@ -132,15 +127,11 @@ const sendAllUserMessage = async (req, res) => {
             message: messageBody
          })
 
-         data.push({
+         responseHandler.ok(res, {
             id: response.data.id,
             phone: phone,
             message: messageBody
-         });
-      }
-
-      if (data.length === phones.length) {
-         responseHandler.ok(res, data);
+         })
       }
    } catch (err) {
       responseHandler.error(res, err)

@@ -590,8 +590,7 @@ const SendSms = ({ students, type }) => {
          setIsrequest(false)
 
          if (response) {
-            response.map(item => toast.success(`${item.phone} ga xabar jo'natildi`));
-            setMessage('')
+            console.log(response);
          }
    
          if (err) toast.error(err.message);
