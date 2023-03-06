@@ -575,38 +575,32 @@ const SendSms = ({ students, type }) => {
       setIscheck(!isCheck);
    }
 
-   const sendMessage = async (e) => {
-      e.preventDefault()
+   async function sendMessage(event){
+      event.preventDefault();
       setIsrequest(true)
       
       if (message.trim().length === 0) {
          toast.warning("Xabar kiritilmagan");
          return
       }
+      let result, error;
 
       if(type == 'all') {
          const { response, err } = await smsApi.sendMessageAllUser(message, token);
-
          setIsrequest(false)
-
-         if (response) {
-            toast.success(`${response.phone} ga xabar jo'natildi`);
-            sendMessage('')
-         }
-   
-         if (err) toast.error(err.message);
+         result = response;
+         error = err;
       } else {
          const { response, err } = await smsApi.sendMessage(students, message, token);
-
          setIsrequest(false)
-
-         if (response) {
-            toast.success(`${response.phone} ga xabar jo'natildi`);
-            sendMessage('')
-         }
-   
-         if (err) toast.error(err.message);
+         result = response;
+         error = err;
       }
+
+      setMessage('')
+
+      if (result) result.map(item => toast.success(`${item.phone} ga xabar jo'natildi!`))
+      if (error) toast.error(error.message);
    }
    return (
       <div className="offcanvas offcanvas-end" tabIndex="-1" id={`sendMessage${type}`} aria-labelledby="offcanvasRightLabel">
@@ -638,7 +632,7 @@ const SendSms = ({ students, type }) => {
                </div>
             )}
 
-            <button className='btn btn-primary'>
+            <button className='btn btn-primary' type='submit'>
                <i className='bi bi-envelope'></i>
                {isRequest && <Loader/>}
             </button>
