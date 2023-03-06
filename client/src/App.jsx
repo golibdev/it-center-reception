@@ -11,7 +11,6 @@ import CourseTime from './pages/CourseTime';
 import SmsTemplate from './pages/SmsTemplate';
 import Student from './pages/Student';
 import SmsStatus from './pages/SmsStatus';
-import SmsToken from './pages/SmsToken';
 
 const App = () => {
   return (
@@ -38,7 +37,6 @@ const App = () => {
             <Route path='/admin/sms-template' element={<SmsTemplate/>} />
             <Route path='/admin/student' element={<Student/>} />
             <Route path='/admin/sms-status' element={<SmsStatus/>} />
-            <Route path='/admin/sms-token' element={<SmsToken/>} />
             <Route path='*' element={<Notfound/>} />
           </Route>
         </Routes>

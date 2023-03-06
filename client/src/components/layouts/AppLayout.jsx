@@ -3,15 +3,18 @@ import Sidebar from '../common/Sidebar';
 import Header from '../common/Header';
 import useAuth from '../../hooks/useAuth';
 import adminApi from '../../api/modules/admin.api';
+import smsApi from '../../api/modules/sms.api';
 import { useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { setAdminData } from '../../redux/features/adminSlice';
 import '../../styles/style.css'
+import { toast } from 'react-toastify';
 
 const AppLayout = () => {
    const navigate = useNavigate();
    const dispatch = useDispatch();
    const token = localStorage.getItem('token');
+   const smsToken = localStorage.getItem('smsToken');
    
    useEffect(() => {
       const getUserInfo = async () => {
@@ -28,10 +31,21 @@ const AppLayout = () => {
          }
       }
 
+      const getSmsToken = async () => {
+         const { response, err } = await smsApi.generateToken();
+
+         if (response) localStorage.setItem('smsToken', response.data.token);
+         if (err) toast.error(err.message);
+      }
+
       if(token) {
          getUserInfo();
       }
-   }, [dispatch, token, navigate])
+
+      if (token && !smsToken) {
+         getSmsToken();
+      }
+   }, [dispatch, token, navigate, smsToken])
 
 
    const auth = useAuth();
