@@ -588,7 +588,7 @@ const SendSms = ({ students, type }) => {
          const { response, err } = await smsApi.sendMessageAllUser(message, token);
          setIsrequest(false)
          if (response) {
-            toast.success(response)
+            toast.success(response.message)
          }
 
          if (err) {
@@ -598,7 +598,7 @@ const SendSms = ({ students, type }) => {
          const { response, err } = await smsApi.sendMessage(students, message, token);
          setIsrequest(false)
          if (response) {
-            toast.success(response)
+            toast.success(response.message)
          }
 
          if (err) {
