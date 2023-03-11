@@ -4,6 +4,7 @@ const responseHandler = require("../handlers/response.handler");
 const studentModel = require('../models/student');
 const smsTemplateModel = require('../models/smsTemplate');
 const smsStatusModel = require('../models/smsStatus');
+const { Worker } = require('worker_threads');
 
 const generateToken = async (req, res) => {
    const SMSSHLYUZAPIURL = process.env.SMS_SHLYUZ_API_URL;
@@ -141,6 +142,14 @@ const sendAllUserMessage = async (req, res) => {
       responseHandler.error(res, err)
    }
 }
+
+const workerSendMessage = new Worker(sendMessage.toString(), { eval: true });
+workerSendMessage.on('error', (err) => console.error(err));
+workerSendMessage.on('exit', (code) => console.log(`Worker exited with code ${code}`));
+
+const workerSendMessageAllUser = new Worker(sendAllUserMessage.toString(), { eval: true });
+workerSendMessageAllUser.on('error', (err) => console.error(err));
+workerSendMessageAllUser.on('exit', (code) => console.log(`Worker exited with code ${code}`));
 
 module.exports = {
    generateToken,
