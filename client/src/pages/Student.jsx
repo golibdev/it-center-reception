@@ -583,24 +583,30 @@ const SendSms = ({ students, type }) => {
          toast.warning("Xabar kiritilmagan");
          return
       }
-      let result, error;
 
       if(type == 'all') {
          const { response, err } = await smsApi.sendMessageAllUser(message, token);
          setIsrequest(false)
-         result = response;
-         error = err;
+         if (response) {
+            toast.success(response)
+         }
+
+         if (err) {
+            toast.error(err.message)
+         }
       } else {
          const { response, err } = await smsApi.sendMessage(students, message, token);
          setIsrequest(false)
-         result = response;
-         error = err;
+         if (response) {
+            toast.success(response)
+         }
+
+         if (err) {
+            toast.error(err.message)
+         }
       }
 
       setMessage('')
-
-      if (result) result.map(item => toast.success(`${item.phone} ga xabar jo'natildi!`))
-      if (error) toast.error(error.message);
    }
    return (
       <div className="offcanvas offcanvas-end" tabIndex="-1" id={`sendMessage${type}`} aria-labelledby="offcanvasRightLabel">
