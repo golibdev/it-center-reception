@@ -69,11 +69,11 @@ const sendMessage = async (req, res) => {
             phone: phone,
             message: messageBody
          })
-
-         responseHandler.ok(res, {
-            message: "Jo'natilmoqda"
-         });
       }
+
+      responseHandler.ok(res, {
+         message: "Jo'natilmoqda"
+      });
    } catch (err) {
       responseHandler.error(res, err);
    }
