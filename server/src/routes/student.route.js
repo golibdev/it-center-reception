@@ -16,6 +16,11 @@ router.get(
 )
 
 router.get(
+   '/export',
+   studentController.exportExcel
+)
+
+router.get(
    '/status',
    tokenMiddleware.auth,
    studentController.getFilterStudents

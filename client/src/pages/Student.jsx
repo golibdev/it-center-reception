@@ -14,6 +14,7 @@ import StatusButton from '../components/common/StatusButton';
 import PageTitle from '../components/common/PageTitle'
 import Loader from '../components/common/Loader';
 import Spinner from '../components/common/Spinner';
+import { apiUrl } from '../constants';
 
 const Student = () => {
    const [isLoading, setIsLoading] = useState(false);
@@ -29,6 +30,7 @@ const Student = () => {
    const [startDate, setStartDate] = useState('')
    const [endDate, setEndDate] = useState('')
    const [clickedStudents, setClickedStudents] = useState([])
+   const [downloadUrl, setDonwloadUrl] = useState(null)
 
    const getCourses = async () => {
       const { response, err } = await courseApi.getAll();
@@ -156,6 +158,14 @@ const Student = () => {
          setClickedStudents(filter)
       }
    }
+
+   const exportExcel = async () => {
+      const { response, err } = await studentApi.exportExcel();
+
+      if (response) setDonwloadUrl(response)
+
+      if (err) toast.error(message);
+   }
    
    return (
       isLoading ? (
@@ -171,13 +181,24 @@ const Student = () => {
                         <PageTitle pageName={"O'quvchilar"} />
                         <div>
                            <div className='d-flex'>
-                              <button 
+                              <button
+                                 onClick={exportExcel}
                                  className='btn btn-primary font-gilroy-medium me-3'
+                              >
+                                 <i className='bi bi-file-earmark-excel'></i>
+                              </button>
+                              {downloadUrl && (
+                                 <a href={downloadUrl} className="btn btn-primary me-3">
+                                    <i className='bi bi-download'></i>
+                                 </a>
+                              )}
+                              <button 
                                  data-bs-toggle="offcanvas" 
                                  data-bs-target="#addStudent" 
                                  aria-controls="offcanvasRight"
+                                 className='btn btn-primary font-gilroy-medium me-3'
                               >
-                                 Qo'shish
+                                 <i className='bi bi-plus-circle'></i>
                               </button>
                               {data.length > 0 && (
                                  <button 

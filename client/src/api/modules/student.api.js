@@ -2,6 +2,7 @@ import privateClient from '../client/private.client';
 
 const studentEndpoints = {
    getAll: "student",
+   export: "student/export",
    search: (searchValue) => `student/search?search=${searchValue}`,
    getFilterStatus: (status, course) => `student/status?status=${status}&course=${course}`,
    getFilterCourse: (course) => `student/course?course=${course}`,
@@ -19,6 +20,14 @@ const studentApi = {
          return { response };
       } catch (err) {
          return { err };
+      }
+   },
+   exportExcel: async () => {
+      try {
+         const response = await privateClient.get(studentEndpoints.export);
+         return { response }
+      } catch (err) {
+         return {err}
       }
    },
    getPagination: async (page) => {

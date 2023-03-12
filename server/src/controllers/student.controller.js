@@ -4,13 +4,15 @@ const utils = require('../utils/status');
 const courseModel = require('../models/course');
 const { isValidObjectId } = require('mongoose');
 const moment = require('moment');
+const ExcelJS = require('exceljs');
+const fs = require('fs');
+const path = require('path');
 
 const getAll = async (req, res) => {
    try {
       const page = parseInt(req.query.page) || 1
       const limit = 10
       const skipIndex = (page - 1) * limit
-
 
       const students = await studentModel
          .find({})
@@ -21,6 +23,78 @@ const getAll = async (req, res) => {
          .sort({ createdAt: -1 });
       
       const total = await studentModel.countDocuments();
+
+      const directoryPath = path.join(__dirname, '..', '..', 'public', 'export');
+
+      fs.readdir(directoryPath, (err, files) => {
+         if (err) {
+            console.error(err);
+            return;
+         }
+
+         for (const file of files) {
+            const filePath = path.join(directoryPath, file);
+
+            fs.stat(filePath, (err, stat) => {
+               if (err) {
+               console.error(err);
+               return;
+               }
+
+               if (stat.isFile()) {
+               fs.unlink(filePath, (err) => {
+                  if (err) {
+                     console.error(err);
+                     return;
+                  }
+               });
+               } else if (stat.isDirectory()) {
+                  deleteFolderRecursive(filePath);
+               }
+            });
+         }
+      });
+
+      function deleteFolderRecursive(directoryPath) {
+         fs.readdir(directoryPath, (err, files) => {
+            if (err) {
+               console.error(err);
+               return;
+            }
+
+            for (const file of files) {
+               const filePath = path.join(directoryPath, file);
+
+               fs.stat(filePath, (err, stat) => {
+                  if (err) {
+                     console.error(err);
+                     return;
+                  }
+
+                  if (stat.isFile()) {
+                     fs.unlink(filePath, (err) => {
+                        if (err) {
+                        console.error(err);
+                        return;
+                        }
+
+                        console.log(`File ${filePath} deleted successfully`);
+                     });
+                  } else if (stat.isDirectory()) {
+                     deleteFolderRecursive(filePath);
+                  }
+               });
+            }
+
+            fs.rmdir(directoryPath, (err) => {
+               if (err) {
+                  console.error(err);
+                  return;
+               }
+            });
+         });
+      }
+
 
       responseHandler.ok(res, {
          message: "students",
@@ -222,6 +296,54 @@ const thisDateRegisteredStudent = async (req, res) => {
    }
 }
 
+const exportExcel = async (req, res) => {
+   try {
+      const data = await studentModel.find().populate('course').lean().exec();
+
+      const workbook = new ExcelJS.Workbook();
+
+      const worksheet = workbook.addWorksheet('Data');
+
+      worksheet.columns = [
+         { header: 'Ism familiya', key: 'fullName', width: 30, alignment: { horizontal: 'center' } },
+         { header: 'Telefon raqami', key: 'phoneNumber', width: 15, alignment: { horizontal: 'center' } },
+         { header: 'Tanlagan kursi', key: 'course', width: 20, alignment: { horizontal: 'center' } },
+         { header: 'Status', key: 'status', width: 30, alignment: { horizontal: 'center' } }
+      ];
+
+      function statusText(status) {
+         let result = ''
+         switch(status) {
+            case 'new': result = 'Yangi'; break;
+            case 'success': result = 'Kursga qatnashadi'; break;
+            case 'rejected': result = 'Kursga qatnashmaydi'; break;
+            case 'phone_off': result = "Telefoni o'chirilgan"; break;
+            case 'dont_phone_answered': result = "Telefonga javob bermadi";
+         }
+
+         return result;
+      }
+
+      data.forEach(item => {
+         worksheet.addRow({
+            fullName: item.fullName,
+            phoneNumber: item.phoneNumber,
+            course: item.course.title,
+            status: statusText(item.status)
+         })
+      })
+      const filename = `export-${Date.now()}.xlsx`;
+      const filePath = path.join(__dirname, '..', '..', 'public', 'export', filename);
+      await workbook.xlsx.writeFile(filePath);
+
+      const fileUrl = `https://crm-api.itpark-qarshi.uz/export/${filename}`;
+
+      responseHandler.ok(res, fileUrl);
+   } catch (err) {
+      responseHandler.error(res, err);
+   }
+}
+
 module.exports = {
    getAll,
    getOne,
@@ -230,5 +352,6 @@ module.exports = {
    getFilterCourseStudents,
    updateStatusStudent,
    thisDateRegisteredStudent,
-   search
+   search,
+   exportExcel
 }

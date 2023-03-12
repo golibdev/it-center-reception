@@ -24,12 +24,14 @@
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
+    "exceljs": "^4.3.0",
     "express": "^4.18.2",
     "express-async-handler": "^1.2.0",
     "express-validator": "^6.15.0",
     "jsonwebtoken": "^9.0.0",
     "moment": "^2.29.4",
-    "mongoose": "^6.8.2"
+    "mongoose": "^6.8.2",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "nodemon": "^2.0.20"
